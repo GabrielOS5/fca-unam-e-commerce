@@ -18,11 +18,11 @@ bin/
 !**/src/test/**/bin/
 
 ### NetBeans ###
-/nbproject/private/
-/nbbuild/
+nbproject/**
 /dist/
 /nbdist/
 /.nb-gradle/
+build/classes
 
 ### VS Code ###
 .vscode/
