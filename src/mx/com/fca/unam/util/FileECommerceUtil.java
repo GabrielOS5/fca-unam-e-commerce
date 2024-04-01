@@ -16,7 +16,7 @@ public class FileECommerceUtil {
     private File file;
     
     public FileECommerceUtil() {
-        file = new File("C:\\Users\\floo_\\Documents\\NetBeansProjects\\fca-unam-e-commerce\\src\\main\\resource\\user.txt");
+        file = new File("${path_file}");
         
         try {
             if (file.exists()) {
