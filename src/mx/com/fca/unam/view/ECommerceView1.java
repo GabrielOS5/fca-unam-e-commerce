@@ -4,19 +4,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Optional;
 import static mx.com.fca.unam.constants.CommonConstants.EMPTY;
+import static mx.com.fca.unam.constants.CommonConstants.OPERATOR;
 import mx.com.fca.unam.model.User;
-import mx.com.fca.unam.service.GetUserService;
+import mx.com.fca.unam.service.user.GetUserService;
 
 public class ECommerceView1 extends javax.swing.JFrame {
     
     private GetUserService getUserService;
     private ECommerceViewBuild eCommerceViewBuild;
     private ECommerceView2 eCommerceView2;
+    private ECommerceView3 eCommerceView3;
     
     public ECommerceView1() {
         getUserService = new GetUserService();
         eCommerceViewBuild =  new ECommerceViewBuild();
         eCommerceView2 = new ECommerceView2();
+        eCommerceView3 = new ECommerceView3();
         
         initComponents();
         errorLabel.setVisible(false);
@@ -193,9 +196,17 @@ public class ECommerceView1 extends javax.swing.JFrame {
                 User user = getUserService.getUser(userTextField.getText(), passwordTextField.getText());
                 
                 if (Optional.ofNullable(user).isPresent()) {
-                    userTextField.setText(EMPTY);
-                    passwordTextField.setText(EMPTY);
-                    eCommerceViewBuild.setVisible(true);
+                    
+                    if (OPERATOR.equals(user.getType())) {
+                        userTextField.setText(EMPTY);
+                        passwordTextField.setText(EMPTY);
+                        eCommerceView3.addInformationUser(user);
+                        eCommerceView3.setVisible(true);
+                        setVisible(false);
+                    } else {
+                        eCommerceViewBuild.setVisible(true);
+                    }
+                    
                 } else {
                     errorLabel.setVisible(true);
                 }

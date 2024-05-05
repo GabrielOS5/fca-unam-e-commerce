@@ -2,7 +2,7 @@ package mx.com.fca.unam.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import mx.com.fca.unam.service.PostUserService;
+import mx.com.fca.unam.service.user.PostUserService;
 
 public class ECommerceView2 extends javax.swing.JFrame {
     
@@ -35,6 +35,8 @@ public class ECommerceView2 extends javax.swing.JFrame {
         saveButton = new javax.swing.JButton();
         nameECommerceLabel = new javax.swing.JLabel();
         registerMessageLabel = new javax.swing.JLabel();
+        typeUserLabel = new javax.swing.JLabel();
+        typeUserComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,6 +109,18 @@ public class ECommerceView2 extends javax.swing.JFrame {
         registerMessageLabel.setForeground(new java.awt.Color(51, 204, 0));
         registerMessageLabel.setText("Usuario registrado correctamente");
 
+        typeUserLabel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        typeUserLabel.setText("Tipo de usuario");
+
+        typeUserComboBox.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        typeUserComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Operador" }));
+        typeUserComboBox.setToolTipText("");
+        typeUserComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                typeUserComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,15 +132,6 @@ public class ECommerceView2 extends javax.swing.JFrame {
                         .addComponent(createUserLabel)
                         .addGap(172, 172, 172))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(242, 242, 242)
-                                    .addComponent(entityFederativeLabel))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(180, 180, 180)
-                                    .addComponent(entityFederativeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(saveButton)
@@ -152,7 +157,15 @@ public class ECommerceView2 extends javax.swing.JFrame {
                                             .addGap(42, 42, 42)))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(phoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(phoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addComponent(phoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(entityFederativeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(entityFederativeLabel))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(typeUserLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(typeUserComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addGap(31, 31, 31))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -189,10 +202,14 @@ public class ECommerceView2 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(39, 39, 39)
-                .addComponent(entityFederativeLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(entityFederativeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(entityFederativeLabel)
+                    .addComponent(typeUserLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(entityFederativeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(typeUserComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42)
                 .addComponent(saveButton)
                 .addGap(18, 18, 18)
                 .addComponent(registerMessageLabel)
@@ -229,6 +246,10 @@ public class ECommerceView2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    private void typeUserComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeUserComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_typeUserComboBoxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel createUserLabel;
@@ -243,6 +264,8 @@ public class ECommerceView2 extends javax.swing.JFrame {
     private javax.swing.JTextField phoneTextField;
     private javax.swing.JLabel registerMessageLabel;
     private javax.swing.JButton saveButton;
+    private javax.swing.JComboBox<String> typeUserComboBox;
+    private javax.swing.JLabel typeUserLabel;
     private javax.swing.JLabel userNameLabel;
     private javax.swing.JTextField userTextField;
     // End of variables declaration//GEN-END:variables
@@ -255,7 +278,8 @@ public class ECommerceView2 extends javax.swing.JFrame {
                         emailTextField.getText(), 
                         passwordTextField.getText(),
                         phoneTextField.getText(), 
-                        entityFederativeComboBox.getSelectedItem().toString());
+                        entityFederativeComboBox.getSelectedItem().toString(),
+                        typeUserComboBox.getSelectedItem().toString());
                 
                 try {
                     Thread.sleep(5000);

@@ -1,4 +1,4 @@
-package mx.com.fca.unam.service;
+package mx.com.fca.unam.service.user;
 
 import java.util.List;
 import mx.com.fca.unam.model.User;

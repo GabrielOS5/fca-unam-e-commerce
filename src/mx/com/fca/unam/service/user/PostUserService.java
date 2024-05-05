@@ -1,6 +1,7 @@
-package mx.com.fca.unam.service;
+package mx.com.fca.unam.service.user;
 
 import java.util.List;
+import static mx.com.fca.unam.constants.CommonConstants.USER_TXT;
 import mx.com.fca.unam.model.User;
 import mx.com.fca.unam.util.FileECommerceUtil;
 
@@ -10,12 +11,12 @@ public class PostUserService {
     private GetAllUserService getAllUserService;
     
     public PostUserService() {
-        fileECommerceUtil = new FileECommerceUtil();
+        fileECommerceUtil = new FileECommerceUtil(USER_TXT);
         getAllUserService = new GetAllUserService();
     }
     
-    public boolean saveUser(String userName, String email, String password, String phone, String entityFederative){
-        User user = new User(getLastId() + 1, userName, email, password, phone, entityFederative);
+    public boolean saveUser(String userName, String email, String password, String phone, String entityFederative, String typeUser){
+        User user = new User(getLastId() + 1, userName, email, password, phone, entityFederative, typeUser);
         boolean flag = fileECommerceUtil.saveUser(user);
         return flag;
     }

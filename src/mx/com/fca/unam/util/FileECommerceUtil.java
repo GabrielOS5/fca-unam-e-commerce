@@ -9,51 +9,28 @@ import java.util.List;
 import java.util.Optional;
 import static mx.com.fca.unam.constants.CommonConstants.LINE_BREAK;
 import static mx.com.fca.unam.constants.CommonConstants.PIPELINE_INSERT;
+import mx.com.fca.unam.model.Product;
 import mx.com.fca.unam.model.User;
 
 public class FileECommerceUtil {
     
     private File file;
     
-    public FileECommerceUtil() {
-        file = new File("${path_file}");
+    private final String path = "fca-unam-e-commerce\\src\\main\\resource\\%s.txt";
+    
+    public FileECommerceUtil(final String filaName) {
+        
+        String pathComplete = String.format(path, filaName);
+        
+        file = new File(pathComplete);
         
         try {
-            if (file.exists()) {
+            if (!file.exists()) {
                file.createNewFile();
             }
         } catch (Exception e) {
-            
+            System.out.println("ERROR: Read file. EXCEPTION: " + e.getMessage());
         }
-    }
-    
-    public boolean saveUser(User user) {
-        try {
-            FileWriter fileWrite = new FileWriter(file, true);
-            String line = buildInformation(user);
-            fileWrite.write(line);
-            fileWrite.write(LINE_BREAK);
-            fileWrite.close();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-    
-    private String buildInformation(User user) {
-        StringBuilder line = new StringBuilder();
-        line.append(user.getId().toString())
-                .append(PIPELINE_INSERT)
-                .append(user.getName())
-                .append(PIPELINE_INSERT)
-                .append(user.getEmail())
-                .append(PIPELINE_INSERT)
-                .append(user.getPassword())
-                .append(PIPELINE_INSERT)
-                .append(user.getPhone())
-                .append(PIPELINE_INSERT)
-                .append(user.getFederalEntity());
-        return line.toString();
     }
     
     public List<String> getContent() {
@@ -71,6 +48,67 @@ public class FileECommerceUtil {
             
         }
         return lines;
+    }
+    
+    // USER
+    public boolean saveUser(User user) {
+        try {
+            FileWriter fileWrite = new FileWriter(file, true);
+            String line = buildInformationUser(user);
+            fileWrite.write(line);
+            fileWrite.write(LINE_BREAK);
+            fileWrite.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    private String buildInformationUser(User user) {
+        StringBuilder line = new StringBuilder();
+        line.append(user.getId().toString())
+                .append(PIPELINE_INSERT)
+                .append(user.getName())
+                .append(PIPELINE_INSERT)
+                .append(user.getEmail())
+                .append(PIPELINE_INSERT)
+                .append(ECommerceUtil.encodePassword(user.getPassword()))
+                .append(PIPELINE_INSERT)
+                .append(user.getPhone())
+                .append(PIPELINE_INSERT)
+                .append(user.getFederalEntity())
+                .append(PIPELINE_INSERT)
+                .append(user.getType());
+        return line.toString();
+    }
+    
+    // PRODUCT
+    public boolean saveProduct(Product product) {
+        try {
+            FileWriter fileWrite = new FileWriter(file, true);
+            String line = buildInformationProduct(product);
+            fileWrite.write(line);
+            fileWrite.write(LINE_BREAK);
+            fileWrite.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println("ERROR: Save product. EXCEPTION: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    private String buildInformationProduct(Product product) {
+        StringBuilder line = new StringBuilder();
+        line.append(product.getId())
+                .append(PIPELINE_INSERT)
+                .append(product.getEan())
+                .append(PIPELINE_INSERT)
+                .append(product.getDescription())
+                .append(PIPELINE_INSERT)
+                .append(product.getPrice())
+                .append(PIPELINE_INSERT)
+                .append(product.getType());
+        return line.toString();
     }
     
 }
