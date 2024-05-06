@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import static mx.com.fca.unam.constants.CommonConstants.LINE_BREAK;
 import static mx.com.fca.unam.constants.CommonConstants.PIPELINE_INSERT;
+import mx.com.fca.unam.model.OnlineCar;
 import mx.com.fca.unam.model.Product;
 import mx.com.fca.unam.model.User;
 
@@ -16,7 +17,7 @@ public class FileECommerceUtil {
     
     private File file;
     
-    private final String path = "C:\\Users\\floo_\\Documents\\Informatica\\Cuarto semestre\\Informática IV\\fca-unam-e-commerce\\src\\main\\resource\\%s.txt";
+    private final String path = "fca-unam-e-commerce\\src\\main\\resource\\%s.txt";
     
     public FileECommerceUtil(final String filaName) {
         
@@ -108,6 +109,33 @@ public class FileECommerceUtil {
                 .append(product.getPrice())
                 .append(PIPELINE_INSERT)
                 .append(product.getType());
+        return line.toString();
+    }
+    
+    // ONLINE CAR
+    public boolean saveOnlineCar(OnlineCar onlineCar) {
+        try {
+            FileWriter fileWrite = new FileWriter(file, true);
+            String line = buildInformationOnlineCar(onlineCar);
+            fileWrite.write(line);
+            fileWrite.write(LINE_BREAK);
+            fileWrite.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println("ERROR: Save online car. EXCEPTION: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    private String buildInformationOnlineCar(OnlineCar onlineCar) {
+        StringBuilder line = new StringBuilder();
+        line.append(onlineCar.getEan())
+                .append(PIPELINE_INSERT)
+                .append(onlineCar.getDescription())
+                .append(PIPELINE_INSERT)
+                .append(onlineCar.getPrice())
+                .append(PIPELINE_INSERT)
+                .append(onlineCar.getAccount());
         return line.toString();
     }
     

@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import mx.com.fca.unam.model.Product;
-//import mx.com.fca.unam.view.ECommerceView1;
+import mx.com.fca.unam.view.ECommerceView1;
 
 public class Application {
 
     
     public static void main(String[] args) {
-        //ECommerceView1 view = new ECommerceView1();
-        //view.setVisible(true);
-        printProducts();
+        ECommerceView1 view = new ECommerceView1();
+        view.setVisible(true);
+        //printProducts();
     }
     
     private static void printProducts() {
