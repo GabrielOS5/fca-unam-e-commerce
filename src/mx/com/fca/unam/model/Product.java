@@ -1,6 +1,6 @@
 package mx.com.fca.unam.model;
 
-public class Product {
+public class Product implements Comparable<Product> {
     
     private Integer id;
     
@@ -63,7 +63,15 @@ public class Product {
     public void setType(String type) {
         this.type = type;
     }
-    
-    
+
+    @Override
+    public int compareTo(Product product) {
+        return description.compareTo(product.description);
+    } 
+
+    @Override
+    public String toString() {
+        return "Product{" + "id=" + id + ", ean=" + ean + ", description=" + description + ", price=" + price + ", type=" + type + '}';
+    }
     
 }

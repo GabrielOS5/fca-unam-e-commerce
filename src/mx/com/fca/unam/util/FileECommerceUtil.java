@@ -16,7 +16,7 @@ public class FileECommerceUtil {
     
     private File file;
     
-    private final String path = "fca-unam-e-commerce\\src\\main\\resource\\%s.txt";
+    private final String path = "C:\\Users\\floo_\\Documents\\Informatica\\Cuarto semestre\\Informática IV\\fca-unam-e-commerce\\src\\main\\resource\\%s.txt";
     
     public FileECommerceUtil(final String filaName) {
         
