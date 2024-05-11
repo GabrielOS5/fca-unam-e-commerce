@@ -13,7 +13,7 @@ git clone https://github.com/GabrielOS5/collaborative-project-introduction-to-pr
 
 El programa fue construido con las siguientes tecnologías y entornos de desarrollo:
 
-* [Java](https://learn.microsoft.com/es-es/cpp/c-language/?view=msvc-170](https://www.oracle.com/mx/java/technologies/downloads/) - Se usó el JDK 17.
+* [Java](https://www.oracle.com/mx/java/technologies/downloads/) - Se usó el JDK 17.
 * [Netbeans](https://netbeans.apache.org/front/main/download/archive/) - El IDE de Java para el trabajo con interfaces gráficas.
 
 ## Autores ✒️
