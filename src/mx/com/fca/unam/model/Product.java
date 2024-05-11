@@ -12,6 +12,8 @@ public class Product implements Comparable<Product> {
     
     private String type;
     
+    private boolean active;
+    
     public Product() {
         
     }
@@ -22,6 +24,23 @@ public class Product implements Comparable<Product> {
         this.description = description;
         this.price = price;
         this.type = type;
+        this.active = Boolean.TRUE;
+    }
+    
+    public Product(String description, Double price, String type, boolean active) {
+        this.description = description;
+        this.price = price;
+        this.type = type;
+        this.active = active;
+    }
+    
+    public Product(Integer id, String ean, String description, Double price, String type, boolean active) {
+        this.id = id;
+        this.ean = ean;
+        this.description = description;
+        this.price = price;
+        this.type = type;
+        this.active = active;
     }
 
     public Integer getId() {
@@ -64,6 +83,14 @@ public class Product implements Comparable<Product> {
         this.type = type;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Override
     public int compareTo(Product product) {
         return description.compareTo(product.description);
@@ -71,7 +98,7 @@ public class Product implements Comparable<Product> {
 
     @Override
     public String toString() {
-        return "Product{" + "id=" + id + ", ean=" + ean + ", description=" + description + ", price=" + price + ", type=" + type + '}';
+        return "Product{" + "id=" + id + ", ean=" + ean + ", description=" + description + ", price=" + price + ", type=" + type + ", active=" + active + '}';
     }
     
 }

@@ -1,22 +1,26 @@
 package mx.com.fca.unam.view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.UUID;
+import javax.swing.JOptionPane;
+import static mx.com.fca.unam.constants.MessagesConstants.SAVE_PRODUCT;
 import mx.com.fca.unam.model.User;
 import mx.com.fca.unam.service.product.PostProductService;
 
 public class ECommerceView3 extends javax.swing.JFrame {
-    
 
-    public ECommerceView3() {
+    private final PostProductService postProductService;
+    
+    private final ECommerceView4 eCommerceView4;
+    
+    private User user;
+    
+    public ECommerceView3(ECommerceView4 eCommerceView4) {
         postProductService = new PostProductService();
+        this.eCommerceView4 = eCommerceView4;
         
         initComponents();
         errorLabel.setVisible(false);
-        registerMessageLabel.setVisible(false);
         setLocationRelativeTo(null);
-        
-        registerProduct();
     }
 
     @SuppressWarnings("unchecked")
@@ -36,11 +40,12 @@ public class ECommerceView3 extends javax.swing.JFrame {
         typeProductComboBox = new javax.swing.JComboBox<>();
         errorLabel = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
-        registerMessageLabel = new javax.swing.JLabel();
         userLabel = new javax.swing.JLabel();
         userValueLabel = new javax.swing.JLabel();
         typeUserLabel = new javax.swing.JLabel();
         typeUserValueLabel = new javax.swing.JLabel();
+        showProductsButton = new javax.swing.JButton();
+        genereEanButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,6 +67,7 @@ public class ECommerceView3 extends javax.swing.JFrame {
         typeProductLabel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         typeProductLabel.setText("Tipo");
 
+        priceTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
         priceTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 priceTextFieldActionPerformed(evt);
@@ -69,9 +75,11 @@ public class ECommerceView3 extends javax.swing.JFrame {
         });
 
         descriptionTextArea.setColumns(20);
+        descriptionTextArea.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
         descriptionTextArea.setRows(5);
         jScrollPane1.setViewportView(descriptionTextArea);
 
+        eanTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
         eanTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eanTextFieldActionPerformed(evt);
@@ -99,10 +107,6 @@ public class ECommerceView3 extends javax.swing.JFrame {
             }
         });
 
-        registerMessageLabel.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        registerMessageLabel.setForeground(new java.awt.Color(51, 204, 0));
-        registerMessageLabel.setText("Producto registrado correctamente");
-
         userLabel.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         userLabel.setText("Usuario:");
 
@@ -114,6 +118,22 @@ public class ECommerceView3 extends javax.swing.JFrame {
 
         typeUserValueLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         typeUserValueLabel.setText("U");
+
+        showProductsButton.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        showProductsButton.setText("VER PRODUCTOS");
+        showProductsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showProductsButtonActionPerformed(evt);
+            }
+        });
+
+        genereEanButton.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        genereEanButton.setText("Generar");
+        genereEanButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                genereEanButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,45 +153,45 @@ public class ECommerceView3 extends javax.swing.JFrame {
                         .addComponent(userLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(userValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(178, 178, 178)
+                                .addComponent(addButton)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(createProductLabel)
                                 .addGap(171, 171, 171))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(userValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(priceLabel)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(priceTextField))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(178, 178, 178)
-                                        .addComponent(addButton))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(60, 60, 60)
-                                        .addComponent(registerMessageLabel)))
-                                .addGap(139, 139, 139))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(priceLabel))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(typeProductComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(typeProductLabel)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGap(15, 15, 15)
-                                        .addComponent(errorLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(errorLabel))
+                                    .addComponent(eanLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(eanLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(eanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(descriptionLabel)
-                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGap(69, 69, 69)
+                                        .addComponent(genereEanButton))
+                                    .addComponent(eanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(52, 52, 52)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(descriptionLabel)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(typeProductComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(typeProductLabel)))
                                 .addGap(61, 61, 61))))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(216, 216, 216)
+                .addComponent(showProductsButton)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,18 +209,22 @@ public class ECommerceView3 extends javax.swing.JFrame {
                             .addComponent(typeUserValueLabel))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(createProductLabel)
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(eanLabel)
-                    .addComponent(descriptionLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(eanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceLabel)
-                    .addComponent(typeProductLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(eanLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eanTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(genereEanButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(descriptionLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(priceLabel)
+                            .addComponent(typeProductLabel))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,9 +233,9 @@ public class ECommerceView3 extends javax.swing.JFrame {
                 .addComponent(errorLabel)
                 .addGap(38, 38, 38)
                 .addComponent(addButton)
-                .addGap(34, 34, 34)
-                .addComponent(registerMessageLabel)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addComponent(showProductsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
 
         pack();
@@ -230,8 +254,39 @@ public class ECommerceView3 extends javax.swing.JFrame {
     }//GEN-LAST:event_typeProductComboBoxActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
+        Double price = 0.0;
+        boolean flagError = true;
+
+        try {
+            price = Double.valueOf(priceTextField.getText());
+        } catch (NumberFormatException ex) {
+            flagError = false;
+            errorLabel.setVisible(true);
+        }
+
+        if (flagError) {
+
+            boolean result = postProductService.saveProduct(eanTextField.getText(),
+                    descriptionTextArea.getText(), price,
+                    typeProductComboBox.getSelectedItem().toString());
+
+            if (result) {
+                errorLabel.setVisible(false);
+                JOptionPane.showMessageDialog(rootPane, SAVE_PRODUCT);
+                
+            }
+        }
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void showProductsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showProductsButtonActionPerformed
+        setVisible(false);
+        eCommerceView4.addInformationUser(user);
+        eCommerceView4.setVisible(true);
+    }//GEN-LAST:event_showProductsButtonActionPerformed
+
+    private void genereEanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genereEanButtonActionPerformed
+        eanTextField.setText(UUID.randomUUID().toString());
+    }//GEN-LAST:event_genereEanButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
@@ -241,11 +296,12 @@ public class ECommerceView3 extends javax.swing.JFrame {
     private javax.swing.JLabel eanLabel;
     private javax.swing.JTextField eanTextField;
     private javax.swing.JLabel errorLabel;
+    private javax.swing.JButton genereEanButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel nameECommerceLabel;
     private javax.swing.JLabel priceLabel;
     private javax.swing.JTextField priceTextField;
-    private javax.swing.JLabel registerMessageLabel;
+    private javax.swing.JButton showProductsButton;
     private javax.swing.JComboBox<String> typeProductComboBox;
     private javax.swing.JLabel typeProductLabel;
     private javax.swing.JLabel typeUserLabel;
@@ -253,53 +309,11 @@ public class ECommerceView3 extends javax.swing.JFrame {
     private javax.swing.JLabel userLabel;
     private javax.swing.JLabel userValueLabel;
     // End of variables declaration//GEN-END:variables
-    
-    private PostProductService postProductService;
-    
+
     public void addInformationUser(User user) {
+        this.user = user;
         userValueLabel.setText(user.getName());
         typeUserValueLabel.setText(user.getType());
     }
-    
-    private void registerProduct() {
-        ActionListener button = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Double price = 0.0;
-                boolean flagError = true;
-                
-                try {
-                    price = Double.parseDouble(priceTextField.getText());
-                } catch (Exception ex) {
-                    flagError = false;
-                    errorLabel.setVisible(true);
-                }
-                
-                if (flagError) {
-                    
-                    boolean result = postProductService.saveProduct(eanTextField.getText(), 
-                        descriptionTextArea.getText(), price, 
-                        typeProductComboBox.getSelectedItem().toString());
-                    registerMessageLabel.setVisible(result);
-                    
-                    if (result) {
-                        errorLabel.setVisible(false);
-                        registerMessageLabel.setVisible(true);
 
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException ex) {
-
-                        }
-
-                        registerMessageLabel.setVisible(false);
-                    }
-                }
-                
-            }
-        };
-        addButton.addActionListener(button);
-        
-    }
-    
 }

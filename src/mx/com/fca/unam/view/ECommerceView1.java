@@ -10,18 +10,16 @@ import mx.com.fca.unam.service.user.GetUserService;
 
 public class ECommerceView1 extends javax.swing.JFrame {
     
-    private GetUserService getUserService;
-    private ECommerceViewBuild eCommerceViewBuild;
-    private ECommerceView2 eCommerceView2;
-    private ECommerceView3 eCommerceView3;
-    private ECommerceView4 eCommerceView4;
+    private final GetUserService getUserService;
+    private final ECommerceView2 eCommerceView2;
+    private final ECommerceView3 eCommerceView3;
+    private final ECommerceView4 eCommerceView4;
     
     public ECommerceView1() {
         getUserService = new GetUserService();
-        eCommerceViewBuild =  new ECommerceViewBuild();
         eCommerceView2 = new ECommerceView2();
-        eCommerceView3 = new ECommerceView3();
         eCommerceView4 = new ECommerceView4();
+        eCommerceView3 = new ECommerceView3(eCommerceView4);
         
         initComponents();
         errorLabel.setVisible(false);

@@ -9,12 +9,15 @@ public class OnlineCar {
     private Double price;
     
     private Double account;
+    
+    private boolean active;
 
-    public OnlineCar(String ean, String description, Double price, Double account) {
+    public OnlineCar(String ean, String description, Double price, Double account, boolean active) {
         this.ean = ean;
         this.description = description;
         this.price = price;
         this.account = account;
+        this.active = active;
     }
 
     public String getEan() {
@@ -41,8 +44,6 @@ public class OnlineCar {
         this.price = price;
     }
     
-    
-
     public Double getAccount() {
         return account;
     }
@@ -51,9 +52,17 @@ public class OnlineCar {
         this.account = account;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Override
     public String toString() {
-        return "OnlineCar{" + "ean=" + ean + ", description=" + description + ", price=" + price + ", account=" + account + '}';
+        return "OnlineCar{" + "ean=" + ean + ", description=" + description + ", price=" + price + ", account=" + account + ", active=" + active + '}';
     }
     
 }

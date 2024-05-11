@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +30,7 @@ public class FileECommerceUtil {
             if (!file.exists()) {
                file.createNewFile();
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("ERROR: Read file. EXCEPTION: " + e.getMessage());
         }
     }
@@ -45,10 +46,25 @@ public class FileECommerceUtil {
                 lines.add(value);
                 value = reader.readLine();
             }
-        } catch (Exception e) {
-            
+        } catch (IOException e) {
+            System.out.println("ERROR: Read file. EXCEPTION: " + e.getMessage());
         }
         return lines;
+    }
+    
+    public boolean updateContent(List<String> content) {
+        try {
+            FileWriter fileWrite = new FileWriter(file);
+            for (String line : content) {
+                fileWrite.write(line);
+                fileWrite.write(LINE_BREAK);
+            }
+            fileWrite.close();
+            return true;
+        } catch (IOException e) {
+            System.out.println("ERROR: Read file. EXCEPTION: " + e.getMessage());
+            return false;
+        }
     }
     
     // USER
@@ -60,7 +76,8 @@ public class FileECommerceUtil {
             fileWrite.write(LINE_BREAK);
             fileWrite.close();
             return true;
-        } catch (Exception e) {
+        } catch (IOException e) {
+            System.out.println("ERROR: Read file. EXCEPTION: " + e.getMessage());
             return false;
         }
     }
@@ -92,7 +109,7 @@ public class FileECommerceUtil {
             fileWrite.write(LINE_BREAK);
             fileWrite.close();
             return true;
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("ERROR: Save product. EXCEPTION: " + e.getMessage());
             return false;
         }
@@ -108,7 +125,9 @@ public class FileECommerceUtil {
                 .append(PIPELINE_INSERT)
                 .append(product.getPrice())
                 .append(PIPELINE_INSERT)
-                .append(product.getType());
+                .append(product.getType())
+                .append(PIPELINE_INSERT)
+                .append(product.isActive());
         return line.toString();
     }
     
@@ -121,7 +140,7 @@ public class FileECommerceUtil {
             fileWrite.write(LINE_BREAK);
             fileWrite.close();
             return true;
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("ERROR: Save online car. EXCEPTION: " + e.getMessage());
             return false;
         }
@@ -135,7 +154,9 @@ public class FileECommerceUtil {
                 .append(PIPELINE_INSERT)
                 .append(onlineCar.getPrice())
                 .append(PIPELINE_INSERT)
-                .append(onlineCar.getAccount());
+                .append(onlineCar.getAccount())
+                .append(PIPELINE_INSERT)
+                .append(onlineCar.isActive());
         return line.toString();
     }
     

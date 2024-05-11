@@ -14,7 +14,7 @@ public class PostOnlineCarService {
     }
     
     public boolean saveProductToCar(Product product, Double account) {
-        OnlineCar onlineCar = new OnlineCar(product.getEan(), product.getDescription(), product.getPrice(), account);
+        OnlineCar onlineCar = new OnlineCar(product.getEan(), product.getDescription(), product.getPrice(), account, product.isActive());
         return fileECommerceUtil.saveOnlineCar(onlineCar);
     }
     
