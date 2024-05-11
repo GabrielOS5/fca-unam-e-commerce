@@ -16,8 +16,7 @@ public class PutOnlineCarService {
     
     public boolean updateOnlineCar(OnlineCar onlineCar, Product product, boolean isActive) {
         List<String> content = fileECommerceUtil.getContent();
-        System.out.println("EMPTY: " + content.isEmpty());
-        System.out.println("SIZE: " + content.size());
+        
         for (int i = 0; i < content.size(); i++) {
             
             if(content.get(i).contains(onlineCar.getEan())) {
