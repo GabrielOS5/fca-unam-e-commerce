@@ -1,0 +1,36 @@
+title TIENDA COMERCIAL - ALTA DE PRODUCTOS
+
+actor Operador as operador
+participant Register as register
+participant PostProductService as postProduct
+participant FileECommerce as file
+participant products.txt as txt
+
+alt SAVE PRODUCT
+    note over operador: Imput information
+    operador -> +register: EAN
+    operador -> register: description
+    operador -> register: price
+    operador -> register: type
+    
+    register -> register: instance object\nProduct
+    register -> +postProduct: Product
+    postProduct -> +file: Product
+    file -> file: buildInformationProduct()
+    file -> +txt: writeInformation
+    
+    file --> register: flag
+    alt flag == TRUE
+        register --> +operador: Successful
+    else flag == FALSE
+        register --> operador: Ocurred a problem
+    end
+    
+    note over operador: Keep same view
+    
+else UPDATE PRODUCT
+    operador -> operador: click button MODIFICAR
+    operador -> register: actionListenerButton()
+    register --> operador: executeEvent
+    note over operador: Redirect view 4
+end

@@ -1,0 +1,47 @@
+title TIENDA COMERCIAL - GUARDADO DE PRODUCTO EN CARRITO Y MODIFICACIÓN
+
+actor User as user
+participant View as view
+participant PutProductService as putProduct
+participant PostOnlineCarService as postOnline
+participant FileECommerce as file
+participant products.txt as prod
+participant onlinecars.txt as onli
+
+alt user.type == CLIENTE
+    user -> +user: select product
+    user -> +view: imput account
+    view -> view: instance object\nOnlineCar
+    view -> +postOnline: OnlineCar
+    postOnline -> +file: OnlineCar
+    file -> file: buildInformationOnlineCar()
+    file -> +onli: writeInformation
+    file --> view: flag
+    
+    alt flag == TRUE
+        view --> user: Successful
+    else flag == FALSE
+        view --> user: Ocurred a problem
+    end
+    
+else user.type == OPERADOR
+    user -> user: select product
+    note over user: Imput information
+    user -> view: name
+    user -> view: price
+    user -> view: type
+    user -> view: active
+    
+    view -> view: instance object\nProduct
+    view -> putProduct: Product
+    putProduct -> file: Product
+    file -> file: updateContent()
+    file -> +prod: writeInformation
+    file --> view: flag
+    
+    alt flag == TRUE
+        view --> user: Successful
+    else flag == FALSE
+        view --> user: Ocurred a problem
+    end
+end

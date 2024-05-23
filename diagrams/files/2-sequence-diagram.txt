@@ -1,0 +1,29 @@
+title TIENDA COMERCIAL - REGISTRO DE USUARIO
+
+actor User as user
+participant Register as register
+participant PostUserService as postUser
+participant FileECommerce as file
+participant users.txt as txt
+
+note over user: Imput information
+user -> +register: userName
+user -> register: email
+user -> register: password
+user -> register: phone
+user -> register: entityFederative
+
+register -> register: instance object\nUser
+register -> +postUser: User
+postUser -> +file: User 
+file -> file: buildInformationUser()
+file -> txt: writeInformation
+
+file --> register: flag
+alt flag == TRUE
+    register --> +user: Successful
+else flag == FALSE
+    register --> user: Ocurred a problem
+end
+
+note over user: Keep same view

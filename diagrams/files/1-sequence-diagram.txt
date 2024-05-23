@@ -1,0 +1,31 @@
+title TIENDA COMERCIAL
+
+actor User as user
+participant Login as login
+participant GetUserService as getUser
+participant GetAllUserService as getAllUser
+participant FileECommerce as file
+participant users.txt as txt
+
+user -> +login: userName and password
+login -> +getUser: getUser()
+getUser -> +getAllUser: getUsers()
+getAllUser -> +file: getContent()
+file -> +txt: readFile()
+
+txt --> getAllUser: content
+getAllUser --> getUser: users
+getUser -> getUser: validateUsername\nandPassword
+
+alt User exists
+    getUser --> login: User
+    
+    opt user.type == OPERADOR
+        login --> user: redirect View 3
+    else user.type == CLIENTE
+        login --> user: redirect View 4
+    end
+else User not exists
+    login --> user: User not found
+    note over user: Keep same view
+end
